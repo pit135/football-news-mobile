@@ -105,13 +105,11 @@ class ItemCard extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
-  // LANGKAH 3:
   // data identitas kamu
   final String nama = "Petrus Wermasaubun";      // ganti pakai namamu sendiri
   final String npm = "2406344542";               // ganti pakai NPM-mu
   final String kelas = "B";                      // ganti pakai kelasmu
 
-  // LANGKAH 4:
   // daftar tombol di menu utama
   final List<ItemHomepage> items = [
     ItemHomepage("See Football News", Icons.newspaper),
@@ -121,7 +119,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // LANGKAH 5: gabungkan InfoCard + ItemCard
     return Scaffold(
       appBar: AppBar(
         title: const Text(

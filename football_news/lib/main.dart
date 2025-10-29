@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Football News',
       theme: ThemeData(
-        // LANGKAH 1: ubah tema warna aplikasi
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.blue,
         ).copyWith(
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      // LANGKAH 2: panggil MyHomePage() tanpa const dan tanpa title
       home: MyHomePage(),
     );
   }
