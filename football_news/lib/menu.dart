@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-// -----------------------------------------
 // ItemHomepage: model data untuk tombol grid
-// -----------------------------------------
 class ItemHomepage {
   final String name;
   final IconData icon;
@@ -10,9 +8,7 @@ class ItemHomepage {
   ItemHomepage(this.name, this.icon);
 }
 
-// -----------------------------------------
-// InfoCard: kartu info simple (NPM, Nama, Kelas)
-// -----------------------------------------
+// kartu info simple (NPM, Nama, Kelas)
 class InfoCard extends StatelessWidget {
   // Kartu informasi yang menampilkan title dan content.
 
@@ -43,9 +39,7 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-// -----------------------------------------
-// ItemCard: kartu tombol berikon di grid
-// -----------------------------------------
+// kartu tombol berikon di grid
 class ItemCard extends StatelessWidget {
   // Menampilkan kartu dengan ikon dan nama.
   final ItemHomepage item;
@@ -99,16 +93,14 @@ class ItemCard extends StatelessWidget {
   }
 }
 
-// -----------------------------------------
-// MyHomePage: sekarang StatelessWidget
-// -----------------------------------------
+// sekarang StatelessWidget
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
   // data identitas kamu
-  final String nama = "Petrus Wermasaubun";      // ganti pakai namamu sendiri
-  final String npm = "2406344542";               // ganti pakai NPM-mu
-  final String kelas = "B";                      // ganti pakai kelasmu
+  final String nama = "Petrus Wermasaubun";   
+  final String npm = "2406344542";            
+  final String kelas = "B";         
 
   // daftar tombol di menu utama
   final List<ItemHomepage> items = [
