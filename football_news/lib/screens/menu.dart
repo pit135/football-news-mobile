@@ -116,8 +116,8 @@ class ItemCard extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
 
-  final String npm = "2406275678";
-  final String nama = "Lionel Messi";
+  final String npm = "2406344542";
+  final String nama = "Petrus Wermasaubun";
   final String kelas = "B";
 
   final List<ItemHomepage> items = [
