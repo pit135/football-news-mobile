@@ -1,78 +1,105 @@
 import 'package:flutter/material.dart';
+import 'package:football_news/screens/menu.dart';
+import 'package:football_news/screens/news_entry_list.dart';
+import 'package:football_news/screens/newslist_form.dart';
+import 'package:football_news/screens/login.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-class News {
-  final String title;
-  final String content;
-  final String category;
-  final String thumbnailUrl;
-  final bool isFeatured;
+class ItemCard extends StatelessWidget {
+  // Menampilkan kartu dengan ikon dan nama.
 
-  const News({
-    required this.title,
-    required this.content,
-    required this.category,
-    required this.thumbnailUrl,
-    required this.isFeatured,
-  });
-}
+  final ItemHomepage item; 
 
-class NewsCard extends StatelessWidget {
-  final News news;
-
-  const NewsCard({super.key, required this.news});
+  const ItemCard(this.item, {super.key}); 
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-      elevation: 3.0,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              news.title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 6),
+    final request = context.watch<CookieRequest>();
+    return Material(
+      // Menentukan warna latar belakang dari tema aplikasi.
+      color: Theme.of(context).colorScheme.secondary,
+      // Membuat sudut kartu melengkung.
+      borderRadius: BorderRadius.circular(12),
 
-            Row(
+      child: InkWell(
+        // Aksi ketika kartu ditekan.
+        onTap: () async {
+          // Menampilkan pesan SnackBar saat kartu ditekan.
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
+            );
+          // Navigate ke route yang sesuai (tergantung jenis tombol)
+          if (item.name == "Add News") {
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup NewsFormPage.
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewsFormPage(),
+              ),
+            );
+          } else if (item.name == "See Football News") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewsEntryListPage(),
+              ),
+            );
+          } else if (item.name == "Logout") {
+              // TODO: Replace the URL with your app's URL and don't forget to add a trailing slash (/)!
+              // To connect Android emulator with Django on localhost, use URL http://10.0.2.2/
+              // If you using chrome,  use URL http://localhost:8000
+              
+              final response = await request.logout(
+                  "http://localhost:8000/auth/logout/");
+              String message = response["message"];
+              if (context.mounted) {
+                  if (response['status']) {
+                      String uname = response["username"];
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("$message See you again, $uname."),
+                      ));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                  } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(message),
+                          ),
+                      );
+                  }
+              }
+          }
+        },
+        // Container untuk menyimpan Icon dan Text
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: Column(
+              // Menyusun ikon dan teks di tengah kartu.
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Chip(
-                  label: Text(news.category),
+                Icon(
+                  item.icon,
+                  color: Colors.white,
+                  size: 30.0,
                 ),
-                const SizedBox(width: 8),
-                if (news.isFeatured)
-                  const Chip(
-                    label: Text('Unggulan'),
-                  ),
+                const Padding(padding: EdgeInsets.all(3)),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
               ],
             ),
-            const SizedBox(height: 6),
-
-            Text(
-              news.content,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-
-            if (news.thumbnailUrl.isNotEmpty) ...[
-              const SizedBox(height: 6),
-              Text(
-                'Thumbnail: ${news.thumbnailUrl}',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ],
-          ],
+          ),
         ),
       ),
     );
   }
+
 }

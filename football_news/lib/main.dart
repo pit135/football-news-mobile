@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:football_news/screens/login.dart';
 import 'package:football_news/screens/menu.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    Provider<CookieRequest>(
+      create: (_) => CookieRequest(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const LoginPage(),
     );
   }
 }
